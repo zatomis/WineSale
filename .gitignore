@@ -6,4 +6,4 @@ venv/
 .vscode/
 .idea/
 .idea
-index.*
+index.html

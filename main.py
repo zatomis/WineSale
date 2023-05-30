@@ -8,7 +8,7 @@ import argparse
 
 START_YEAR = 1920
 
-def createParser():
+def create_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('-e', '--excel', type=str, help='Имя файла excel', default='test.xlsx')
 
@@ -24,7 +24,7 @@ def correct_year(number):
 
 
 def main():
-    parser = createParser()
+    parser = create_parser()
     excel_file = parser.parse_args().excel
 
     env = Environment(loader=FileSystemLoader('.'), autoescape=select_autoescape(['html', 'xml']))
