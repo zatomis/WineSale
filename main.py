@@ -8,19 +8,20 @@ import argparse
 
 START_YEAR = 1920
 
+
 def create_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('-e', '--excel', type=str, help='Имя файла excel', default='test.xlsx')
 
     return parser
 
+
 def correct_year(number):
-    years_case = {0:'лет',1:'год',2:'года',3:'года',4:'года',5:'лет',6:'лет',7:'лет',8:'лет',9:'лет'}
-    if ((number % 100) >= 11 and (number % 100)<=20):
+    years_case = { 0: 'лет', 1: 'год', 2: 'года', 3: 'года', 4: 'года', 5: 'лет', 6: 'лет', 7: 'лет', 8: 'лет', 9: 'лет' }
+    if ((number % 100) >= 11 and (number % 100) <= 20):
         return "лет"
     else:
-        return years_case.get(number%10)
-
+        return years_case.get(number % 10)
 
 
 def main():
@@ -58,7 +59,6 @@ def main():
     server = HTTPServer(('127.0.0.1', 8000), SimpleHTTPRequestHandler)
     server.serve_forever()
 
+
 if __name__ == '__main__':
     main()
-
-
