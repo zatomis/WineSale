@@ -17,8 +17,8 @@ def create_parser():
 
 
 def correct_year(number):
-    years_case = { 0: 'лет', 1: 'год', 2: 'года', 3: 'года', 4: 'года', 5: 'лет', 6: 'лет', 7: 'лет', 8: 'лет', 9: 'лет' }
-    if ((number % 100) >= 11 and (number % 100) <= 20):
+    years_case = {0: 'лет', 1: 'год', 2: 'года', 3: 'года', 4: 'года', 5: 'лет', 6: 'лет', 7: 'лет', 8: 'лет', 9: 'лет'}
+    if (number % 100) >= 11 and (number % 100) <= 20:
         return "лет"
     else:
         return years_case.get(number % 10)
@@ -51,7 +51,8 @@ def main():
         products_by_category[category_name].append(product)
 
     rendered_page = template.render(wines=products_by_category,
-                                    count_year=f"{datetime.date.today().year - START_YEAR}  {correct_year(datetime.date.today().year - START_YEAR)}")
+                                    count_year=f"{datetime.date.today().year - START_YEAR} "
+                                               f" {correct_year(datetime.date.today().year - START_YEAR)}")
 
     with open('index.html', 'w', encoding="utf8") as file:
         file.write(rendered_page)
