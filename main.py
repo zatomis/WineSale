@@ -30,9 +30,9 @@ def main():
     template = env.get_template('template.html')
     excel_value = pandas.read_excel(excel_file, sheet_name='Лист1',
                                     usecols=['Категория', 'Название', 'Сорт', 'Цена', 'Картинка', 'Акция'])
-    excel_to_dict = excel_value.to_dict(orient='records')
+    product_dictionary = excel_value.to_dict(orient='records')
     products_by_category = collections.defaultdict(list)
-    for item in excel_to_dict:
+    for item in product_dictionary:
         category_name = item['Категория']
         product = {
             'Название': item['Название'],
@@ -42,10 +42,8 @@ def main():
             'Акция': item['Акция'],
         }
 
-        if category_name not in products_by_category:
-            products_by_category[category_name] = []
-
-        products_by_category[category_name].append(product)
+        if category_name:
+            products_by_category[category_name].append(product)
 
     rendered_page = template.render(wines=products_by_category,
                                     count_year=f"{datetime.date.today().year - START_YEAR} "
@@ -54,7 +52,7 @@ def main():
     with open('index.html', 'w', encoding="utf8") as file:
         file.write(rendered_page)
 
-    server = HTTPServer(('127.0.0.1', 8088), SimpleHTTPRequestHandler)
+    server = HTTPServer(('127.0.0.1', 8000), SimpleHTTPRequestHandler)
     server.serve_forever()
 
 
