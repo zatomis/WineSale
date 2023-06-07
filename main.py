@@ -12,7 +12,6 @@ START_YEAR = 1920
 def create_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('-e', '--excel', type=str, help='Имя файла excel', default='test.xlsx')
-
     return parser
 
 
@@ -27,15 +26,13 @@ def correct_year(number):
 def main():
     parser = create_parser()
     excel_file = parser.parse_args().excel
-
     env = Environment(loader=FileSystemLoader('.'), autoescape=select_autoescape(['html', 'xml']))
     template = env.get_template('template.html')
     excel_value = pandas.read_excel(excel_file, sheet_name='Лист1',
                                     usecols=['Категория', 'Название', 'Сорт', 'Цена', 'Картинка', 'Акция'])
-    json_excel = excel_value.to_json(orient='records', force_ascii=False)
-
+    excel_to_dict = excel_value.to_dict(orient='records')
     products_by_category = collections.defaultdict(list)
-    for item in json.loads(json_excel):
+    for item in excel_to_dict:
         category_name = item['Категория']
         product = {
             'Название': item['Название'],
@@ -57,7 +54,7 @@ def main():
     with open('index.html', 'w', encoding="utf8") as file:
         file.write(rendered_page)
 
-    server = HTTPServer(('127.0.0.1', 8000), SimpleHTTPRequestHandler)
+    server = HTTPServer(('127.0.0.1', 8088), SimpleHTTPRequestHandler)
     server.serve_forever()
 
 
